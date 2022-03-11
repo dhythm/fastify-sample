@@ -12,12 +12,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const tap_1 = require("tap");
-const fastify_1 = __importDefault(require("fastify"));
-const support_1 = __importDefault(require("../../src/plugins/support"));
-(0, tap_1.test)('support works standalone', (t) => __awaiter(void 0, void 0, void 0, function* () {
-    const fastify = (0, fastify_1.default)();
-    void fastify.register(support_1.default);
-    yield fastify.ready();
-    t.equal(fastify.someSupport(), 'hugs');
+const fastify_plugin_1 = __importDefault(require("fastify-plugin"));
+const fastify_sensible_1 = __importDefault(require("fastify-sensible"));
+/**
+ * This plugins adds some utilities to handle http errors
+ *
+ * @see https://github.com/fastify/fastify-sensible
+ */
+exports.default = (0, fastify_plugin_1.default)((fastify, opts) => __awaiter(void 0, void 0, void 0, function* () {
+    fastify.register(fastify_sensible_1.default, {
+        errorHandler: false
+    });
 }));

@@ -12,12 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const tap_1 = require("tap");
-const fastify_1 = __importDefault(require("fastify"));
-const support_1 = __importDefault(require("../../src/plugins/support"));
-(0, tap_1.test)('support works standalone', (t) => __awaiter(void 0, void 0, void 0, function* () {
-    const fastify = (0, fastify_1.default)();
-    void fastify.register(support_1.default);
-    yield fastify.ready();
-    t.equal(fastify.someSupport(), 'hugs');
+const fastify_plugin_1 = __importDefault(require("fastify-plugin"));
+// The use of fastify-plugin is required to be able
+// to export the decorators to the outer scope
+exports.default = (0, fastify_plugin_1.default)((fastify, opts) => __awaiter(void 0, void 0, void 0, function* () {
+    fastify.decorate('someSupport', function () {
+        return 'hugs';
+    });
 }));
