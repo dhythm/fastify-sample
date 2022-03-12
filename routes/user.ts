@@ -1,4 +1,4 @@
-import { Type } from "@sinclair/typebox";
+import { Static, Type } from "@sinclair/typebox";
 import { RouteType } from "./types";
 
 const User = Type.Object({
@@ -9,9 +9,8 @@ const User = Type.Object({
 const Users = Type.Object({
   users: Type.Array(User),
 });
-// type UserType = Static<typeof User>;
 
-export const getUsers: RouteType = {
+export const getUsers: RouteType<{ Reply: Static<typeof Users> }> = {
   method: "GET",
   url: "/user",
   schema: {
@@ -29,7 +28,7 @@ export const getUsers: RouteType = {
   },
 };
 
-export const getUser: RouteType = {
+export const getUser: RouteType<{ Reply: Static<typeof User> }> = {
   method: "GET",
   url: "/user/:id",
   schema: {
