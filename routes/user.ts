@@ -5,6 +5,7 @@ const User = Type.Object({
   name: Type.String(),
   mail: Type.Optional(Type.String({ format: "email" })),
 });
+type UserType = Static<typeof User>;
 
 const Users = Type.Object({
   users: Type.Array(User),
@@ -28,7 +29,7 @@ export const getUsers: RouteType<{ Reply: Static<typeof Users> }> = {
   },
 };
 
-export const getUser: RouteType<{ Reply: Static<typeof User> }> = {
+export const getUser: RouteType<{ Reply: UserType }> = {
   method: "GET",
   url: "/user/:id",
   schema: {
@@ -38,5 +39,20 @@ export const getUser: RouteType<{ Reply: Static<typeof User> }> = {
   },
   handler: async (request, reply) => {
     return reply.status(200).send({ name: "user1", mail: "user@test.com" });
+  },
+};
+
+export const createUser: RouteType<{ Body: UserType; Reply: UserType }> = {
+  method: "POST",
+  url: "/user",
+  schema: {
+    body: User,
+    response: {
+      200: User,
+    },
+  },
+  handler: (request, reply) => {
+    const { body: user } = request;
+    reply.status(200).send(user);
   },
 };

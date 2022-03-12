@@ -1,8 +1,8 @@
 import fastify, { FastifyInstance } from "fastify";
 import fastifySwagger from "fastify-swagger";
-import { getItems } from "./routes/item";
+import { createItem, getItems } from "./routes/item";
 import { ping } from "./routes/ping";
-import { getUser, getUsers } from "./routes/user";
+import { createUser, getUser, getUsers } from "./routes/user";
 // import { Server, IncomingMessage, ServerResponse } from "http";
 
 const server: FastifyInstance = fastify({ logger: true });
@@ -67,7 +67,9 @@ server.register(fastifySwagger, {
 server.route(ping);
 server.route(getUsers);
 server.route(getUser);
+server.route(createUser);
 server.route(getItems);
+server.route(createItem);
 
 const start = async () => {
   try {
