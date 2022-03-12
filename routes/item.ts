@@ -6,11 +6,13 @@ const Item = z.object({
   name: z.string(),
   price: z.number(),
 });
-const Items = z.array(Item);
+const Items = z.object({ items: z.array(Item) });
+
+type ItemsType = z.infer<typeof Items>;
 
 const jsonSchema = zodToJsonSchema(Items, "schema");
 
-export const getItems: RouteType = {
+export const getItems: RouteType<{ Reply: ItemsType }> = {
   method: "GET",
   url: "/item",
   schema: jsonSchema.definitions.schema,
