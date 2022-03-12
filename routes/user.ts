@@ -20,9 +20,12 @@ export const getUsers: RouteType = {
     },
   },
   handler: async (request, reply) => {
-    return reply
-      .status(200)
-      .send({ users: [{ name: "name", mail: "user@test.com" }] });
+    return reply.status(200).send({
+      users: [
+        { name: "user1", mail: "user1@test.com" },
+        { name: "user2", mail: "user2@test.com" },
+      ],
+    });
   },
 };
 
@@ -35,6 +38,6 @@ export const getUser: RouteType = {
     },
   },
   handler: async (request, reply) => {
-    return reply.status(200).send({ name: "name", mail: "user@test.com" });
+    return reply.status(200).send({ name: "user1", mail: "user@test.com" });
   },
 };
